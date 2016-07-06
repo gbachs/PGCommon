@@ -104,8 +104,7 @@ namespace PGCommon.Database
                 {
                     result = thisObj.ExecuteNonQuery();
 
-                    if (thisObj.Transaction != null)
-                        thisObj.Transaction.Commit();
+                    thisObj.Transaction?.Commit();
 
                     wasSuccessful = true;
                 }
@@ -113,8 +112,7 @@ namespace PGCommon.Database
                 {
                     if (ex.Number != deadlockErrorNumber || retryCounter >= retryCount)
                     {
-                        if (thisObj.Transaction != null)
-                            thisObj.Transaction.Rollback();
+                        thisObj.Transaction?.Rollback();
                         throw;
 
                     }
